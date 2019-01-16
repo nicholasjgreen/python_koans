@@ -33,7 +33,17 @@ from runner.koan import *
 # Your goal is to write the score method.
 
 def score(dice):
-    # You need to write this method
+    # Count up each value, and div 3 values
+    dice_val_counts = [dice.count(dice_val) for dice_val in range(1, 7)]
+    triples = [count // 3 for count in dice_val_counts]
+    singles = [count % 3 for count in dice_val_counts]
+    # Work out the points for each type
+    triple_points = [1000, 200, 300, 400, 500, 600]
+    single_points = [100, 0, 0, 0, 50, 0]
+    score_for_dice_val_idx = lambda dice_val_idx: \
+        (triple_points[dice_val_idx] * triples[dice_val_idx]) + \
+        (single_points[dice_val_idx] * singles[dice_val_idx])
+    return sum([score_for_dice_val_idx(dice_val_idx) for dice_val_idx in range(6)])
     pass
 
 class AboutScoringProject(Koan):
